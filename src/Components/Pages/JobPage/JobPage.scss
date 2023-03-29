@@ -1,0 +1,94 @@
+.job-page{
+  background: #eee;
+  padding: 60px 0;
+  .job-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+    border: 1px solid #ddd;
+    color: #333;
+    background: #fff;
+    ul{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      li{
+          font-size: 14px;
+          font-weight: 500;
+      }
+  }
+  
+    .top {
+      display: flex;
+      gap: 20px;
+      img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+      }
+      .title {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        span {
+          width: fit-content;
+          font-size: 14px;
+          font-weight: 500;
+          padding: 5px 20px;
+          color: #fff;
+          background: #16796f;
+        }
+        h1 {
+          font-size: 30px;
+          padding-right: 100px;
+        }
+      }
+    }
+    .job-detail{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px;
+      border: 1px solid #ddd;
+  
+      .left{
+          display: flex;
+          gap: 20px;
+      }
+      .middle{
+          display: flex;
+          gap: 20px;
+          border-left: 2px solid #ddd;
+          padding-left: 80px;
+      }
+      .right{
+          display: flex;
+          gap: 20px;
+          border-left: 2px solid #ddd;
+          padding-left: 80px;
+      }
+    }
+    .desc{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      p{
+          font-size: 15px;
+          font-weight: 400;
+          color: #353535;
+      }
+    }
+    .bottom{
+      button{
+          padding: 7px 20px;
+          font-weight: 500;
+          font-size: 14px;
+          width: fit-content;
+          &:hover{
+              background: #054e47;
+          }
+      }
+    }
+  }
+}

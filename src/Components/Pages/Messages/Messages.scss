@@ -1,0 +1,65 @@
+.messages {
+  background: #eee;
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 60px 0;
+
+    .message {
+      width: 80%;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      margin: 0 auto;
+      padding: 20px;
+      justify-content: space-between;
+      &:first-child{
+        padding: 0;
+        background: transparent;
+        padding-bottom: 10px;
+      }
+      
+            &.unreaded{
+              background: rgba(22, 121, 111, 0.2);
+            }
+      h2{
+        font-size: 32px;
+        font-weight: 500;
+        color: #333;
+      }
+    
+      .left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        img {
+          width: 40px;
+          height: 40px;
+          object-fit: cover;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          -ms-border-radius: 50%;
+          -o-border-radius: 50%;
+        }
+        span{
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+      }
+      p{
+        font-size: 15px;
+        font-weight: 400;
+        color: #333;
+      }
+      small{
+        font-size: 12px;
+        font-weight: 400;
+        color: #808080;
+      }
+    }
+  }
+}

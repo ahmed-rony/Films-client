@@ -1,0 +1,29 @@
+.magazine-item {
+    width: 100%;
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2), -0px -0px 12px #ffffff;
+    }
+    img {
+      width: 100%;
+    }
+
+    .info {
+      padding: 10px 10px 20px;
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #16796f;
+        text-transform: lowercase;
+      }
+      h4 {
+        font-size: 22px;
+        font-weight: 200;
+        color: #353535;
+      }
+    }
+  }

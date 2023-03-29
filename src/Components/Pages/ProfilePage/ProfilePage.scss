@@ -1,0 +1,84 @@
+.profile{
+    width: 100%;
+    background: #eee;
+
+    .cover{
+        img{
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+    }
+    .user-detail{
+        width: 100%;
+        height: 80px;
+        background: #054e47;
+
+        .detail{
+            position: relative;
+            img{
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                position: absolute;
+                bottom: 20px;
+                border: 10px solid #fff;
+            }
+            h3{
+                position: absolute;
+                top: -60px;
+                left: 170px;
+                font-size: 32px;
+                font-weight: 300;
+                color: #fff;
+            }
+            ul{
+                width: 100%;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                padding-left: 200px;
+                li{
+                    font-size: 18px;
+                    font-weight: 500;
+                    color: #fff;
+                    display: inline-block;
+                    height: 100%;
+                    padding: 0 15px;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    &:hover{
+                        background: #16796f;
+                    }
+                }
+            }
+            .connection{
+                height: 100%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                button{
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    &.last{
+                        background: #fff !important;
+                        color: #333 !important;
+                    }
+                }
+            }
+        }
+    }
+    .content{
+        padding: 60px 0;
+        
+        &.columns{
+            columns: 4;
+            column-gap: 20px;
+        }
+    }
+}

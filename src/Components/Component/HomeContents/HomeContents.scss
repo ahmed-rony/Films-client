@@ -1,0 +1,26 @@
+.home-content {
+  background: #eee;
+  padding: 60px 0;
+
+  h3 {
+    font-size: 26px;
+    font-weight: 300;
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 20px;
+    color: #333;
+    span {
+      font-weight: 400;
+    }
+  }
+
+  .magazine {
+    columns: 2;
+    column-gap: 20px;
+    
+  }
+  .feature {
+    columns: 2;
+    column-gap: 20px;
+    
+  }
+}

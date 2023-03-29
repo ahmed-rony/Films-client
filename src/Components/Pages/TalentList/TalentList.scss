@@ -1,0 +1,100 @@
+.talent_list {
+  background: #eee;
+  padding-bottom: 60px;
+  .talent_bg {
+    width: 100%;
+    height: 80vh;
+    background-image: url("./Img/talent-bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    &::before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .banner-detail {
+      width: 100%;
+      position: absolute;
+      top: 170px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+
+      h1 {
+        font-size: 50px;
+        font-family: "Raleway", sans-serif;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .searching {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60px;
+        input {
+          width: 40%;
+          height: 60px;
+          padding: 0 10px;
+          outline: none;
+          border: none;
+          &::placeholder {
+            font-style: italic;
+          }
+        }
+        button {
+          height: 60px;
+        }
+      }
+    }
+  }
+  .content {
+    padding-top: 100px;
+    position: relative;
+    
+
+    .tabs{
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      button {
+        height: 40px;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 0 20px;
+        &.active {
+          background: #054e47;
+        }
+      }
+}
+
+    h3 {
+      font-size: 26px;
+      font-weight: 300;
+      font-family: "Raleway", sans-serif;
+      margin-bottom: 20px;
+      color: #333;
+      word-wrap: break-word;
+      span {
+        font-weight: 400;
+      }
+    }
+  }
+}

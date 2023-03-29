@@ -1,0 +1,117 @@
+.feature_item {
+    width: 100%;
+    background: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+    &::before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(24, 30, 65, 0) 54%
+      );
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &:hover {
+      .hover-item {
+        opacity: 1;
+      }
+    }
+    img {
+      width: 100%;
+      height: fit-content;
+    }
+
+    .info {
+      padding: 10px 10px 20px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      color: #fff;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      img {
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+      }
+      .user-span{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        span {
+          font-size: 12px;
+          font-weight: 500;
+          text-transform: lowercase;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+        .interact{
+          font-weight: 200;
+        }
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 200;
+      }
+    }
+    .hover-item {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      transition: all ease 0.2s;
+      -webkit-transition: all ease 0.2s;
+      -moz-transition: all ease 0.2s;
+      -ms-transition: all ease 0.2s;
+      -o-transition: all ease 0.2s;
+      
+      .follow {
+        padding: 5px 10px;
+        background: #16796f;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 300;
+        position: absolute;
+        top: 0;
+        left: 0;
+        &:hover{
+          background: #054e47;
+        }
+      }
+
+      .icons {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        .icon {
+          color: #fff;
+          font-size: 24px;
+          &:hover{
+            color: #16796f;
+          }
+        }
+      }
+    }
+  }
