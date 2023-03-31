@@ -21,7 +21,7 @@ const Navbar = () => {
             <Link to="/companies">Companies</Link>
             <Link to="/magazine">Magazine</Link>
           </div>
-          <div className="login">
+          <div className="join-btns">
             {currentUser ? (
               <>
                 <img

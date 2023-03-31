@@ -2,11 +2,11 @@ import React from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { FcGoogle } from "react-icons/fc";
-import "./Register.scss";
+import "./Login.scss";
 import { Link } from "react-router-dom";
 import Navbar from "../../Component/Navbar/Navbar";
 
-const initialValues2 = {
+const initialValues = {
   email: "",
   password: "",
 };
@@ -16,19 +16,18 @@ const contactSchema = yup.object().shape({
   country: yup.string().required("Country is required"),
 });
 
-const Register = () => {
+const Login = () => {
   const handleSubmit = () => {
     console.log(value);
   };
 
   return (
     <>
-        <Navbar />
-      <section className="register">
-
+    <Navbar/>
+      <section className="login">
         <Formik
           onSubmit={handleSubmit}
-          initialValues={initialValues2}
+          initialValues={initialValues}
           validationSchema={contactSchema}
         >
           {({
@@ -39,29 +38,9 @@ const Register = () => {
             handleChange,
             handleSubmit,
           }) => (
-            <form onSubmit={handleSubmit} className="register-form">
-              <div className="register-box">
-                <h2>Create an Account</h2>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  value={values.username}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.username && !!errors.username}
-                  helperText={touched.username && errors.username}
-                />
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  name="fullname"
-                  value={values.fullname}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.fullname && !!errors.fullname}
-                  helperText={touched.fullname && errors.fullname}
-                />
+            <form onSubmit={handleSubmit} className="login-form">
+              <div elevation={3} className="login-box">
+                <h2>Sign In</h2>
                 <input
                   type="text"
                   placeholder="Email"
@@ -83,15 +62,13 @@ const Register = () => {
                   helperText={touched.password && errors.password}
                 />
 
-                <button type="submit" className="brand-btn register-btn">
-                  Submit
-                </button>
+                <button className="brand-btn login-btn">Submit</button>
                 <button className="brand-btn google-btn ">
                   <FcGoogle className="me-2 google-icon" />
                   Google
                 </button>
                 <small>
-                  Have an account? <Link to="/login">login</Link>
+                  Don't have an account? <Link to="/register">register</Link>
                 </small>
               </div>
             </form>
@@ -102,4 +79,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

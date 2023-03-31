@@ -5,6 +5,7 @@ import CompaniesList from './CompaniesList/CompaniesList';
 import Home from './Home/Home';
 import JobList from './JobList/JobList';
 import JobPage from './JobPage/JobPage';
+import Login from './Login/Login';
 import MagazineList from './MagazineList/MagazineList';
 import Message from './Message/Message';
 import Messages from './Messages/Messages';
@@ -28,9 +29,10 @@ const MainPage = () => {
                         <Route path='/magazine' element={<MagazineList />}></Route>
                         <Route path='/messages' element={<Messages />}></Route>
                         <Route path='/addProject' element={<NewProject />}></Route>
-                        <Route path='/register' element={<Register />}></Route>
                         <Route path='*' element={<Page404 />}></Route>
                     </Route>
+                        <Route path='/login' element={<Login />}></Route>
+                        <Route path='/register' element={<Register />}></Route>
                         <Route path='/profile/:id' element={<ProfilePage />}></Route>
                         <Route path='/message/:id' element={<Message />}></Route>
                 </Routes>
