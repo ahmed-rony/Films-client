@@ -1,79 +1,69 @@
-import React from "react";
-import { Formik } from "formik";
-import * as yup from "yup";
+import React, { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import "./Login.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../Component/Navbar/Navbar";
-
-const initialValues = {
-  email: "",
-  password: "",
-};
-const contactSchema = yup.object().shape({
-  address: yup.string().required("Address is required"),
-  city: yup.string().required("City is required"),
-  country: yup.string().required("Country is required"),
-});
+import { newRequest } from "../../Utilities/newRequest";
+import AuthContext from "../../Utilities/Reducers/AuthReducer";
 
 const Login = () => {
-  const handleSubmit = () => {
-    console.log(value);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loading, error, dispatch } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await newRequest.post("/auths/login", { username, password });
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      navigate("/");
+    } catch (error) {
+      dispatch({ type: "LOGIN_FAIL", payload: error.response.data });
+    }
   };
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <section className="login">
-        <Formik
-          onSubmit={handleSubmit}
-          initialValues={initialValues}
-          validationSchema={contactSchema}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-          }) => (
-            <form onSubmit={handleSubmit} className="login-form">
-              <div elevation={3} className="login-box">
-                <h2>Sign In</h2>
-                <input
-                  type="text"
-                  placeholder="Email"
-                  name="email"
-                  value={values.email}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.email && !!errors.email}
-                  helperText={touched.email && errors.email}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={values.password}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.password && !!errors.password}
-                  helperText={touched.password && errors.password}
-                />
+        <form onSubmit={handleSubmit} className="login-form">
+          <div elevation={3} className="login-box">
+            <h2>Sign In</h2>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-                <button className="brand-btn login-btn">Submit</button>
-                <button className="brand-btn google-btn ">
-                  <FcGoogle className="me-2 google-icon" />
-                  Google
-                </button>
-                <small>
-                  Don't have an account? <Link to="/register">register</Link>
-                </small>
-              </div>
-            </form>
-          )}
-        </Formik>
+            <button
+              disabled={loading}
+              type="submit"
+              className="brand-btn login-btn"
+            >
+              Login
+            </button>
+            <button className="brand-btn google-btn ">
+              <FcGoogle className="me-2 google-icon" />
+              Google
+            </button>
+            {error && <small style={{ color: "orange" }}>{error}</small>}
+            <small>
+              Don't have an account? <Link to="/register">register</Link>
+            </small>
+          </div>
+        </form>
       </section>
     </>
   );

@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { newRequest } from "../../Utilities/newRequest";
+import AuthContext from "../../Utilities/Reducers/AuthReducer";
 
 const Navbar = () => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const { currentUser, dispatch } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const handleLogout = async () => {
+    try {
+      await newRequest.post("/auths/logout");
+      dispatch({ type: "LOGOUT"});
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -24,16 +40,19 @@ const Navbar = () => {
           <div className="join-btns">
             {currentUser ? (
               <>
-                <img
-                  src="https://i.pinimg.com/236x/6b/2f/32/6b2f323d39f013faa9bf8ce141e9fba7.jpg"
-                  alt=""
-                />
-                <button>Logout</button>
+              <Link to={`/profile/${currentUser?._id}`}>
+                <img src={currentUser?.profilePic || "/Img/avater.jpg"} alt="" />
+              </Link>
+                <button onClick={handleLogout}>Logout</button>
               </>
             ) : (
               <>
-              <Link to='/register'><button>Join Us</button></Link>
-              <Link to='/login'><button>Login</button></Link>
+                <Link to="/register">
+                  <button>Join Us</button>
+                </Link>
+                <Link to="/login">
+                  <button>Login</button>
+                </Link>
               </>
             )}
           </div>

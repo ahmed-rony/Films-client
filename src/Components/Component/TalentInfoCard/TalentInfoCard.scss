@@ -55,11 +55,18 @@
     border-top: 1px solid #16796f;
     border-right: 1px solid #16796f;
     border-bottom: 1px solid #16796f;
-    h4{
-        font-size: 18px;
-        font-weight: 600;
-        color: #16796f;
-        margin-bottom: 10px;
+
+    .skills{
+      display: flex;
+      gap: 5px;
+
+      h4{
+          font-size: 18px;
+          font-weight: 600;
+          color: #16796f;
+          margin-bottom: 10px;
+          text-transform: capitalize;
+      }
     }
     h5{
         font-size: 15px;
@@ -68,7 +75,8 @@
         color: #333;
         span{
             color: #16796f;
-            font-weight: 600;
+            font-weight: 500;
+            text-transform: capitalize;
         }
     }
     p{
@@ -85,6 +93,7 @@
         background: #16796f;
         padding: 5px 10px;
         display: inline-block;
+        text-transform: capitalize;
     }
   }
 }

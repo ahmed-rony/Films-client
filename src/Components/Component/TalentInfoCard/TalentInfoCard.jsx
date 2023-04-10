@@ -3,29 +3,43 @@ import { Link } from "react-router-dom";
 import "./TalentInfoCard.scss";
 
 const TalentInfoCard = ({ data }) => {
-  // console.log(data.map((p) => p.info[0].skills));
+  console.log(data);
   return (
     <div>
       {data.map((p) => (
-        <Link to={`/profile/${p.id}`} key={p.id}>
+        <Link to={`/profile/${p?._id}`} key={p?._id}>
           <div className="info_item">
             <div className="left">
-              <img src={p.imgUser} alt="" />
+              <img src={p?.profilePic} alt="" />
               <div className="detail">
-                <h4>{p.username}</h4>
+                <h4>{p?.fullName}</h4>
                 <div className="skill">
-                  <span>{p.info[0].skills}</span>
-                  <span>{p.info[0].address}</span>
+                  <span>{p?.talentTitle}</span>
+                  <span>{p?.location}</span>
                 </div>
               </div>
             </div>
             <div className="right">
-              <h4>Sound Editor / Music Editor / Composer</h4>
+              <div className="skills">
+                {p?.skills?.map((s, i, arr) => (
+                  <React.Fragment key={i}>
+                    <h4 key={i}>
+                      {s}
+                      {i < arr.length - 1 && " / "}
+                    </h4>
+                  </React.Fragment>
+                ))}
+              </div>
               <h5>
-                Skill Level: <span>Intermediate</span>
+                Skill Level: {p?.skillLevel?.map((sl, i, arr) => (
+                  <React.Fragment key={i}>
+                    <span key={sl}>{sl}</span>
+                    {i < arr.length - 1 && ", "}
+                  </React.Fragment>
+                ))}
               </h5>
-              <p>{p.desc.substring(0, 300)}..</p>
-              <h6>Looking for work</h6>
+              <p>{p?.about.substring(0, 300)}..</p>
+              <h6>{p?.availability}</h6>
             </div>
           </div>
         </Link>
