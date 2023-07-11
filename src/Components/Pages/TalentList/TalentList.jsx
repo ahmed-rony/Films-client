@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import TalentCard from "../../Component/TalentCard/TalentCard";
 import TalentInfoCard from "../../Component/TalentInfoCard/TalentInfoCard";
-import { talentWork } from "../../Utilities/Data";
 import "./TalentList.scss";
 import { useQuery } from "react-query";
 import { newRequest } from "../../Utilities/newRequest";
-import { useLocation } from "react-router-dom";
 
 const TalentList = () => {
   const [tabs, setTabs] = useState(false);
@@ -13,9 +11,8 @@ const TalentList = () => {
   const [searching, setSearching] = useState({
     searchInp: "",
     checkedInp: [],
+    isTalent: true,
   });
-
-  const { search } = useLocation();
 
   const handleChange = (e) => {
     setSearching((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -35,7 +32,7 @@ const TalentList = () => {
     data: talentWorks,
     refetch: talentRefetch,
   } = useQuery({
-    queryKey: ["talentWorks"],
+    queryKey: ["project"],
     queryFn: async () =>
       await newRequest
         .get(
@@ -46,38 +43,43 @@ const TalentList = () => {
         }),
   });
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["userProfile"],
     queryFn: async () =>
-      await newRequest.get(`/users?search=${searching.searchInp}&cat=${searching.checkedInp}`).then((res) => {
-        return res.data;
-      }),
+      await newRequest
+        .get(
+          `/users?search=${searching.searchInp}&cat=${searching.checkedInp}&isTalent=${searching.isTalent}`
+        )
+        .then((res) => {
+          return res.data;
+        }),
   });
-  const handleSearch = () => {
-    if(tabs){
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (tabs) {
       refetch();
-    }else{
+    } else {
       talentRefetch();
     }
     setFilterTab(false);
   };
-  console.log({data},{talentWorks});
+
   return (
     <div className="talent_list">
       <div className="talent_bg">
         <div className="banner-detail">
           <h1>Industry Leading Talent</h1>
           <p>Connect, collaborate and hire our community.</p>
-          <div className="searching">
+          <form onSubmit={handleSearch} className="searching">
             <input
               type="text"
               name="searchInp"
               placeholder="Find a talent"
               onChange={handleChange}
             />
-            <button className="brand-btn" onClick={handleSearch}>
+            <button className="brand-btn" type="submit">
               SEARCH
             </button>
-          </div>
+          </form>
           <div className="filter">
             <span onClick={() => setFilterTab(!filterTab)}>Filter</span>
             <div className={filterTab ? "ch-box visible" : "ch-box"}>
@@ -108,29 +110,53 @@ const TalentList = () => {
                     <label htmlFor="">Editor</label>
                   </div>
                   <div className="item">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="director"
+                      onChange={handleChecked}
+                    />
                     <label htmlFor="">Director</label>
                   </div>
                   <div className="item">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="project manager"
+                      onChange={handleChecked}
+                    />
                     <label htmlFor="">Project Manager</label>
                   </div>
                 </div>
                 <div className="right">
                   <div className="item">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="animation"
+                      onChange={handleChecked}
+                    />
                     <label htmlFor="">Animator</label>
                   </div>
                   <div className="item">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="producer"
+                      onChange={handleChecked}
+                    />
                     <label htmlFor="">Producer</label>
                   </div>
                   <div className="item">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="illustration"
+                      onChange={handleChecked}
+                    />
                     <label htmlFor="">Illustrator</label>
                   </div>
                   <div className="item">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="script writer"
+                      onChange={handleChecked}
+                    />
                     <label htmlFor="">Script Writer</label>
                   </div>
                 </div>
@@ -155,9 +181,6 @@ const TalentList = () => {
               Profiles
             </button>
           </div>
-          <h3>
-            Searched: <span>editor</span>
-          </h3>
           {tabs ? (
             isLoading ? (
               "loading"
@@ -171,13 +194,12 @@ const TalentList = () => {
           ) : talentWorkError ? (
             "Something went wrong!"
           ) : (
-            <TalentCard data={talentWorks} />
+            talentWorks?.map((t) => <TalentCard key={t?._id} talent={t} />)
           )}
         </div>
       </div>
     </div>
   );
-  333;
 };
 
 export default TalentList;

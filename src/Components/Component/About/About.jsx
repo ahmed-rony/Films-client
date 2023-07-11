@@ -5,18 +5,29 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 const About = ({ data }) => {
   const [company, setCompany] = useState(false);
+  const dateStr = data?.createdAt;
+  const date = new Date(dateStr);
+  const options = { month: "long", day: "numeric", year: "numeric" };
+  const formattedDate = date.toLocaleDateString(undefined, options);
   return (
     <div className="about">
       <div className="left">
         <div className="item">
           <h3>About {data?.isTalent ? "Me" : "Us"}</h3>
-          <p>{data.about}</p>
+          <p>{data?.about}</p>
         </div>
         <div className="item">
           <h3>Skills</h3>
-          {data?.skills?.map((s) => (
-            <span>{s}</span>
-          ))}
+          <div className="array">
+            {data?.skills?.map((s, i, arr) => (
+              <React.Fragment key={i}>
+                <span>
+                  {s}
+                  {i < arr.length - 1 && ", "}
+                </span>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
       <div className="right">
@@ -35,28 +46,46 @@ const About = ({ data }) => {
         </div>
         <div className="item">
           <h4>AVAILABILITY</h4>
-          <span>Looking for work</span>
+          <span>{data?.availability || "N/A"}</span>
         </div>
         <div className="item">
           <h4>CONTRACT</h4>
-          <span>Remote</span>
+          <span>{data?.contract || "N/A"}</span>
         </div>
         <div className="item">
           <h4>LOCATION</h4>
           <span>
             <FaMapMarkerAlt className="icon" />
-            London, United Kingdom
+            {data?.location || "N/A"}
           </span>
         </div>
         <div className="item">
           <h4>SKILL LEVEL</h4>
-          <span>Junior, Middleweight, Senior, Director</span>
+          <div className="array">
+            {data?.skillLevel?.map((sl, i, arr) => (
+              <React.Fragment key={i}>
+                <span>
+                  {sl}
+                  {i < arr.length - 1 && ", "}
+                </span>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
         <div className="item">
           <h4>LANGUAGES</h4>
-          <span>English</span>
+          <div className="array">
+            {data?.language?.map((lang, i, arr) => (
+              <React.Fragment key={i}>
+                <span>
+                  {lang}
+                  {i < arr.length - 1 && ", "}
+                </span>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
-        <span className="since">Film &'s' member since 29 November 2022</span>
+        <span className="since">Film &'s' member since {formattedDate}.</span>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   talentTitle: "",
   profilePic: null,
   profileCover: null,
+//   pdfCV: null,
   about: "",
   availability: "",
   location: "",
@@ -32,6 +33,11 @@ const ProfileReducer = (state, action) =>{
                 profilePic: action.payload.profilePic,
                 profileCover: action.payload.profileCover,
             }
+        // case "ADD_PDF":
+        //     return {
+        //         ...state,
+        //         pdfCV: action.payload.pdfCV,
+        //     }
         case "ADD_LANGUAGE":
             return {
                 ...state,

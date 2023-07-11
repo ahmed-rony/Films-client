@@ -35,7 +35,7 @@ const Navbar = () => {
             <Link to="/talents">Talents</Link>
             <Link to="/jobs">Jobs</Link>
             <Link to="/companies">Companies</Link>
-            <Link to="/magazine">Magazine</Link>
+            <Link to="/magazines">Magazine</Link>
           </div>
           <div className="join-btns">
             {currentUser ? (

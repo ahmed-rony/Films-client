@@ -1,20 +1,23 @@
-import React from 'react';
-import './MagazineCard.scss';
+import React from "react";
+import "./MagazineCard.scss";
+import { Link } from "react-router-dom";
 
-const MagazineCard = ({mag}) => {
-    return (
-        <div>
-            {mag.map((g) => (
-                <div className="magazine-item" key={g.id}>
-                  <img src={g.imgUrl} alt="" />
-                  <div className="info">
-                    <span>{g.username}</span>
-                    <h4>{g.title.substring(0, 70)}..</h4>
-                  </div>
-                </div>
-              ))}
+const MagazineCard = ({ data }) => {
+  return (
+    <Link to={`/magazines/${data?._id}`}>
+      <div className="magazine-item" key={data?.id}>
+        <img src={data?.magazineCover} alt="" />
+        <div className="info">
+          <span>{data?.userName}</span>
+          <h4>
+            {data?.title?.length > 70
+              ? `${data?.title?.substring(0, 35)}..`
+              : data?.title}
+          </h4>
         </div>
-    );
+      </div>
+    </Link>
+  );
 };
 
 export default MagazineCard;

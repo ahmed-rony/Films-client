@@ -54,6 +54,7 @@
         small {
           font-size: 14px;
           color: #ddd;
+          text-transform: none;
         }
       }
       h5 {
@@ -96,6 +97,37 @@
         display: flex;
         align-items: center;
         gap: 20px;
+
+        .followings{
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          position: absolute;
+          top: -40px;
+          right: 0;
+
+          h6{
+            font-size: 16px;
+            font-weight: 300;
+            color: #fff;
+          }
+        }
+
+        .create{
+          display: none;
+        }
+        .create-toggle{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          position: absolute;
+          top: 65px;
+          button{
+            width: 100%;
+          }
+          
+        }
         button {
           display: flex;
           align-items: center;

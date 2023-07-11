@@ -12,6 +12,7 @@ const NewProject = () => {
   const [uploading, setUploading] = useState(false);
 
   const { state, dispatch } = useContext(ProjectContext);
+  console.log(state);
 
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ const NewProject = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (project) => {
-      return newRequest.post(`/projects/${state.userId}`, project);
+      return newRequest.post(`/projects`, project);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["project"]);
@@ -62,7 +63,7 @@ const NewProject = () => {
 
   const handleSubmit = async () => {
     try {
-      mutation.mutate(state);
+      await mutation.mutateAsync(state);
       navigate(`/profile/${state.userId}`);
     } catch (error) {
       console.log(error);

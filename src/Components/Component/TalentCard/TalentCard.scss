@@ -4,6 +4,7 @@
     margin-bottom: 20px;
     position: relative;
     cursor: pointer;
+    break-inside: avoid;
     &::before {
       content: "";
       width: 100%;

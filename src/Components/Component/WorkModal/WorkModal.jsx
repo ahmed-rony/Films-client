@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal/lib/components/Modal";
 import "./WorkModal.scss";
 import { Link } from "react-router-dom";
@@ -6,14 +6,100 @@ import { RiUserFollowLine } from "react-icons/ri";
 import { FiMail, FiHeart } from "react-icons/fi";
 import { MdOutlineRemoveRedEye, MdOutlineClose } from "react-icons/md";
 import YouTube from "react-youtube";
+import Comment from "../Comment/Comment";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { newRequest } from "../../Utilities/newRequest";
+import AuthContext from "../../Utilities/Reducers/AuthReducer";
 
 const WorkModal = ({ data, modalIsOpen, setModalIsOpen }) => {
+  const [desc, setDesc] = useState("");
+  const { currentUser } = useContext(AuthContext);
   const closeModal = () => {
     setModalIsOpen(false);
   };
   const opts = {
     height: "390",
     width: "690",
+  };
+  const projectId = data?._id;
+
+  // ========================================================
+  const {
+    isLoading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery({
+    queryKey: ["userProfile"],
+    queryFn: async () =>
+      await newRequest.get(`/users/${data?.userId}`).then((res) => {
+        return res.data;
+      }),
+  });
+
+  // ========================================================
+  const {
+    isLoading: commentLoading,
+    error: commentError,
+    data: comments,
+  } = useQuery({
+    queryKey: ["comments"],
+    queryFn: async () =>
+      await newRequest.get(`/comments/${projectId}`).then((res) => {
+        return res.data;
+      }),
+  });
+
+  // ========================================================
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (comment) => {
+      return newRequest.post(`/comments`, comment);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["comments"]);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    const userId = currentUser._id;
+    e.preventDefault();
+    mutation.mutateAsync({ projectId, userId, desc });
+  };
+
+  // ========================================================
+  const FollowMutation = useMutation({
+    mutationFn: (profileId) => {
+      return newRequest.put(`/users/${data?.userId}/follow`, { profileId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userProfile"]);
+    },
+  });
+
+  const handleFollow = async () => {
+    try {
+      await FollowMutation.mutateAsync(currentUser?._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // ========================================================
+  const likeMutation = useMutation({
+    mutationFn: (profileId) => {
+      return newRequest.put(`/projects/${data?._id}/like`, { profileId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["project"]);
+    },
+  });
+
+  const handleLike = async () => {
+    try {
+      await likeMutation.mutateAsync(currentUser?._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -26,27 +112,28 @@ const WorkModal = ({ data, modalIsOpen, setModalIsOpen }) => {
           <div className="left">
             <div className="user">
               <Link to={`/profile/${data?.userId}`}>
-                <img
-                  src="https://i.pinimg.com/236x/6b/2f/32/6b2f323d39f013faa9bf8ce141e9fba7.jpg"
-                  alt=""
-                />
+                <img src={data?.userPic} alt="" />
               </Link>
               <div className="info">
-                <h3>Emile Joe</h3>
-                <span>Design Director</span>
+                <h3>{data?.userName}</h3>
+                <span>{data?.userTitle}</span>
               </div>
             </div>
-            <div className="connection">
-              <button>
-                Follow
-                <RiUserFollowLine />
-              </button>
-              <Link to="/messages">
-                <button>
-                  Message <FiMail />
+            {data?.userId !== currentUser?._id && (
+              <div className="connection">
+                <button onClick={handleFollow}>
+                  {userData?.followers?.includes(currentUser?._id)
+                    ? "Following"
+                    : "Follow"}
+                  <RiUserFollowLine />
                 </button>
-              </Link>
-            </div>
+                <Link to="/messages">
+                  <button>
+                    Message <FiMail />
+                  </button>
+                </Link>
+              </div>
+            )}
             <hr />
             <div className="about-pro">
               <h4>About Project</h4>
@@ -61,7 +148,7 @@ const WorkModal = ({ data, modalIsOpen, setModalIsOpen }) => {
                   <MdOutlineRemoveRedEye className="icon" /> {data?.views}
                 </span>
                 <span>
-                  <FiHeart className="icon" /> {data?.likes}
+                  <FiHeart className="icon" /> {data?.likes?.length}
                 </span>
               </div>
             </div>
@@ -79,47 +166,50 @@ const WorkModal = ({ data, modalIsOpen, setModalIsOpen }) => {
               ))}
             </div>
             <div className="bottom">
-              <FiHeart className="icon" />
+              {data?.userId !== currentUser?._id && (
+                <FiHeart
+                  className={
+                    data?.likes?.includes(currentUser?._id)
+                      ? "icon liked"
+                      : "icon"
+                  }
+                  onClick={handleLike}
+                />
+              )}
 
               <h4>Comments</h4>
-              <div className="comment">
-                <img
-                  src="https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg"
-                  alt=""
-                />
-                <form>
-                  <textarea
-                    rows=""
-                    cols=""
-                    placeholder="Add your comment"
-                  ></textarea>
-                  <button>Post a comment</button>
-                </form>
-              </div>
-              <hr />
-              <div className="comments">
-                <img
-                  src="https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg"
-                  alt=""
-                />
-                <div className="detail">
-                  <div className="user">
-                    <span>Samantha Moon</span>
-                    <small>21 Jan 2023</small>
-                  </div>
-                  <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Mollitia possimus amet odio accusamus. Molestias
-                    consectetur, omnis perspiciatis corrupti vero modi?
-                  </p>
+              {data?.userId !== currentUser?._id && (
+                <div className="comment">
+                  <img
+                    src="https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg"
+                    alt=""
+                  />
+                  <form onSubmit={handleSubmit}>
+                    <textarea
+                      name="desc"
+                      rows=""
+                      cols=""
+                      placeholder="Add your comment"
+                      onChange={(e) => setDesc(e.target.value)}
+                    ></textarea>
+                    <button type="submit">Post a comment</button>
+                  </form>
                 </div>
-              </div>
+              )}
+              {commentLoading
+                ? "loading"
+                : commentError
+                ? "Something went wrong!"
+                : comments?.map((comment) => (
+                    <Comment key={comment?._id} comment={comment} />
+                  ))}
               <hr />
               <h4>Project Tags</h4>
               <div className="tags">
-                {data?.tags?.map((tag, i) => (
+                {data?.tags?.map((tag, i, arr) => (
                   <React.Fragment key={i}>
-                    <span>{tag}</span>{i < data?.tags?.length - 1 && ","}
+                    <span>{tag}</span>
+                    {i < arr.length - 1 && ","}
                   </React.Fragment>
                 ))}
               </div>

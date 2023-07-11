@@ -1,5 +1,4 @@
 import React from "react";
-import { gridMag, talentWork } from "../../Utilities/Data";
 import "./HomeContents.scss";
 import TalentCard from "../TalentCard/TalentCard";
 import MagazineCard from "../MagazineCard/MagazineCard";
@@ -7,14 +6,28 @@ import { useQuery } from "react-query";
 import { newRequest } from "../../Utilities/newRequest";
 
 const HomeContents = () => {
-
-  const { isLoading, error, data: talentWorks } = useQuery({
-    queryKey: ['talentWorks'],
+  const {
+    isLoading: talentWorkLoading,
+    error: talentWorkError,
+    data: talentWorks,
+  } = useQuery({
+    queryKey: ["project"],
     queryFn: async () =>
-      await newRequest.get(`/projects`).then((res)=>{
+      await newRequest.get(`/projects`).then((res) => {
         return res.data;
-      })
-    });
+      }),
+  });
+  const {
+    isLoading: magLoading,
+    error: magError,
+    data: mag,
+  } = useQuery({
+    queryKey: ["magazine"],
+    queryFn: async () =>
+      await newRequest.get(`/magazines`).then((res) => {
+        return res.data;
+      }),
+  });
   return (
     <div className="home-content">
       <div className="container">
@@ -24,15 +37,19 @@ const HomeContents = () => {
               Featured <span>Work</span>
             </h3>
             <div className="feature">
-              <TalentCard data={talentWorks}/>
+              {talentWorks?.map((t) => (
+                <TalentCard key={t?._id} talent={t} />
+              ))}
             </div>
           </div>
           <div className="col-md-6">
             <h3>
               Latest from the <span>Magazines</span>
             </h3>
-            <div className="magazine">
-              <MagazineCard mag={gridMag}/>
+            <div className="home_magazine">
+              {mag?.map((t) => (
+                <MagazineCard data={t} key={t?._id} />
+              ))}
             </div>
           </div>
         </div>

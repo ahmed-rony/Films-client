@@ -3,95 +3,92 @@ import "./JobPage.scss";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { useLocation } from "react-router-dom";
+import { newRequest } from "../../Utilities/newRequest";
+import { useQuery } from "react-query";
 
 const JobPage = () => {
+  const jobId = useLocation().pathname.split("/")[2];
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["job"],
+    queryFn: async () =>
+      await newRequest.get(`/jobs/${jobId}`).then((res) => {
+        return res.data;
+      }),
+  });
+  
   return (
     <div className="job-page">
       <div className="container">
-        <div className="job-content">
-          <div className="top">
-            <img
-              src="https://i.pinimg.com/236x/96/5b/36/965b362e46c829a0c3c18f9f9910abff.jpg"
-              alt=""
-            />
-            <div className="title">
-              <span className="post-type">Featured</span>
-              <h1>Senior Designer - Paul Smith Dressing (Maternity Cover)</h1>
+        {isLoading ? (
+          "loading"
+        ) : error ? (
+          "Something went wrong!"
+        ) : (
+          <div className="job-content">
+            <div className="top">
+              <img
+                src={data?.userPic}
+                alt=""
+              />
+              <div className="title">
+                <span className="post-type">Featured</span>
+                <h1>{data?.title}</h1>
+              </div>
+            </div>
+            <div className="job-detail">
+              <div className="left">
+                <ul>
+                  <li>
+                    <FaMapMarkerAlt className="icon" />
+                  </li>
+                  <li>
+                    <MdWork className="icon" />
+                  </li>
+                  <RiMoneyDollarCircleFill className="icon" />
+                </ul>
+                <ul>
+                  <li>{data?.location}</li>
+                  <li>{data?.contract}</li>
+                  <li>${data?.minimum} {data?.minimum && "-"} ${data?.maximum  || "N/A"} /day</li>
+                </ul>
+              </div>
+              <div className="middle">
+                <ul>
+                  <li>Company</li>
+                  <li>starting Date</li>
+                  <li>Closing Date</li>
+                </ul>
+                <ul>
+                  <li>{data?.userName}</li>
+                  <li>{data?.startingDate}</li>
+                  <li>{data?.closingDate  || "N/A"}</li>
+                </ul>
+              </div>
+              <div className="right">
+                <ul>
+                  <li>Category</li>
+                  <li>Age</li>
+                  <li>Skill Level</li>
+                </ul>
+                <ul>
+                  <li>{data?.category}</li>
+                  <li>{data?.age || "N/A"}yr</li>
+                  <li>{data?.skillLevel}</li>
+                </ul>
+              </div>
+            </div>
+            <div className="desc">
+              <p>
+              {data?.desc}
+              </p>
+            </div>
+            <div className="bottom">
+              <button className="brand-btn">Apply for this job</button>
             </div>
           </div>
-          <div className="job-detail">
-            <div className="left">
-              <ul>
-                <li>
-                  <FaMapMarkerAlt className="icon" />
-                </li>
-                <li>
-                  <MdWork className="icon" />
-                </li>
-                <RiMoneyDollarCircleFill className="icon" />
-              </ul>
-              <ul>
-                <li>London</li>
-                <li>remote</li>
-                <li>$300 - $600 /day</li>
-              </ul>
-            </div>
-            <div className="middle">
-              <ul>
-                <li>Company</li>
-                <li>starting Date</li>
-                <li>Closing Date</li>
-              </ul>
-              <ul>
-                <li>WHYTE</li>
-                <li>ASAP</li>
-                <li>23 April 2023</li>
-              </ul>
-            </div>
-            <div className="right">
-              <ul>
-                <li>Company</li>
-                <li>Wage</li>
-                <li>Closing Date</li>
-              </ul>
-              <ul>
-                <li>WHYTE</li>
-                <li>$300 - $600 /day</li>
-                <li>23 April 2023</li>
-              </ul>
-            </div>
-          </div>
-          <div className="desc">
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat
-              earum modi tempora eum facilis in odio corrupti molestiae est,
-              aliquid sed perspiciatis atque dolore? Ad similique esse adipisci
-              ipsum doloremque sequi? Adipisci possimus dolorum dicta suscipit
-              minima aliquid necessitatibus architecto, vitae aperiam obcaecati
-              doloremque, dolor excepturi amet, numquam facilis laborum soluta.
-              Cumque quas architecto corrupti nam aspernatur beatae ex
-              cupiditate?
-            </p>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat
-              earum modi tempora eum facilis in odio corrupti molestiae est,
-              aliquid sed perspiciatis atque dolore? Ad similique esse adipisci
-              ipsum doloremque sequi? Adipisci possimus dolorum dicta suscipit
-              minima aliquid necessitatibus architecto, vitae aperiam obcaecati
-              doloremque, dolor excepturi aonsectetur adipisicing elit. Repellat
-              earum modi tempora eum facilis in odio corrupti molestiae est,
-              aliquid sed perspiciatis atque dolore? Ad similique esse adipisci
-              ipsum doloremque sequi? Adipisci possimus dolorum dicta suscipit
-              minima aliquid necessitatibus architecto, vitae aperiam obcaecati
-              doloremque, dolor excepturi amet, numquam facilis laborum soluta.
-              Cumque quas architecto corrupti nam aspernatur beatae ex
-              cupiditate?
-            </p>
-          </div>
-          <div className="bottom">
-            <button className="brand-btn">Apply for this job</button>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

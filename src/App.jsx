@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ProfileProvider } from "./Components/Utilities/Reducers/ProfileReducer";
 import { AuthProvider } from "./Components/Utilities/Reducers/AuthReducer";
 import { ProjectProvider } from "./Components/Utilities/Reducers/ProjectReducer";
+import { JobProvider } from "./Components/Utilities/Reducers/JobReducer";
+import { MagazineProvider } from "./Components/Utilities/Reducers/MagazineReducer";
 
 function App() {
   const queryClient = new QueryClient();
@@ -14,7 +16,11 @@ function App() {
         <AuthProvider>
           <ProjectProvider>
             <ProfileProvider>
-              <MainPage />
+              <MagazineProvider>
+                <JobProvider>
+                  <MainPage />
+                </JobProvider>
+              </MagazineProvider>
             </ProfileProvider>
           </ProjectProvider>
         </AuthProvider>

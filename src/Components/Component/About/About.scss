@@ -22,10 +22,17 @@
       p {
         font-size: 16px;
         font-weight: 300;
+        text-transform: capitalize;
       }
-      span {
-        font-size: 14px;
-        font-weight: 400;
+      .array{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        span {
+          font-size: 14px;
+          font-weight: 400;
+          text-transform: capitalize;
+        }
       }
     }
   }
@@ -70,6 +77,12 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        text-transform: capitalize;
+      }
+      .array{
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
       .icons{
         font-size: 18px;

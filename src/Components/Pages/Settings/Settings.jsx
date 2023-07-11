@@ -14,7 +14,6 @@ const Settings = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { state, dispatch } = useContext(ProfileContext);
-  console.log({state});
 
   const userId = useLocation().pathname.split('/')[2];
   const navigate = useNavigate();
@@ -80,8 +79,7 @@ const Settings = () => {
   const handleSubmit = async () => {
     try {
         const {_id, ...data} = state;
-        mutation.mutate(data);
-        console.log({data});
+        await mutation.mutateAsync(data);
         navigate(`/profile/${currentUser._id}`)
     } catch (error) {
       console.log(error);
@@ -113,7 +111,7 @@ const Settings = () => {
               />
             </div>
             <div className="item">
-              <label htmlFor="">Profile Picture</label>
+              <label htmlFor="">Profile Picture {!currentUser?.isTalent && "/ Company Logo"}</label>
               <input
                 type="file"
                 onChange={(e) => setProfilePic(e.target.files[0])}
@@ -137,7 +135,10 @@ const Settings = () => {
               <label htmlFor="">Availability</label>
               <select name="availability" onChange={handleChange}>
                 <option disabled>Select</option>
+                {currentUser?.isTalent ?
                 <option value="looking for work">Looking for work</option>
+                :<option value="recruiting">Recruiting</option>
+                }
                 <option value="on a project">On a project</option>
                 <option value="on vacation">On vacation</option>
               </select>
@@ -182,11 +183,11 @@ const Settings = () => {
             </div>
           </div>
           <div className="right">
-            <div className="item">
+            {currentUser?.isTalent && <div className="item">
               <label htmlFor="">Upload CV/Resume</label>
               <input type="file" />
-            </div>
-            <div className="item">
+            </div>}
+            {currentUser?.isTalent && <div className="item">
               <label htmlFor="">Skills</label>
               <form onSubmit={handleSkills}>
                 <input
@@ -213,8 +214,8 @@ const Settings = () => {
                   ))}
                 </div>
               </div>
-            </div>
-            <div className="item">
+            </div>}
+            {currentUser?.isTalent && <div className="item">
               <label htmlFor="">Skill Level</label>
               <form onSubmit={handleSkillLevel}>
                 <input
@@ -241,8 +242,8 @@ const Settings = () => {
                   ))}
                 </div>
               </div>
-            </div>
-            <div className="item">
+            </div>}
+            {currentUser?.isTalent && <div className="item">
               <label htmlFor="">Contract</label>
               <select name="contract" onChange={handleChange}>
                 <option disabled>Select</option>
@@ -251,7 +252,7 @@ const Settings = () => {
                 <option value="freelance">Freelance</option>
                 <option value="hybrid">Hybrid</option>
               </select>
-            </div>
+            </div>}
             <div className="item">
               <label htmlFor="">About {currentUser?.isTalent ? "Me" : "Us"}</label>
               <textarea

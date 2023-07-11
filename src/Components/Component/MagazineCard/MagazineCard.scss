@@ -4,6 +4,7 @@
     margin-bottom: 20px;
     border-radius: 3px;
     cursor: pointer;
+    break-inside: avoid;
 
     &:hover {
       box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2), -0px -0px 12px #ffffff;

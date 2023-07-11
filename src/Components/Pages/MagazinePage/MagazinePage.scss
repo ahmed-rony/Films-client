@@ -1,0 +1,50 @@
+.magazine_page{
+    background: #eee;
+    padding: 60px 0;
+    .mag-content{
+
+
+        .cats{
+            width: 100%;
+            padding: 3px 25px;
+            color: #fff;
+            background: #054e47;
+            font-size: 14px;
+        }
+        .title{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img{
+                width: fit-content;
+                max-height: 400px;
+            }
+            h2{
+                font-family: 'Raleway', sans-serif;
+                font-weight: 300;
+                font-size: 60px;
+                color: #74767e;
+                text-align: center;
+                padding-bottom: 10px;
+            }
+            small{
+                color: #74767e;
+            }
+        }
+    }
+    .blog{
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+        h1,h2,h3,h4,h5,h6,p,span,small,li{
+            font-weight: 300 !important;
+        }
+
+        .ql-align-center{
+            text-align: center;
+        }
+        .ql-align-right{
+            text-align: right;
+        }
+    }
+}

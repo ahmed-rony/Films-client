@@ -1,4 +1,4 @@
-.job-page{
+.job-page {
   background: #eee;
   padding: 60px 0;
   .job-content {
@@ -9,16 +9,16 @@
     border: 1px solid #ddd;
     color: #333;
     background: #fff;
-    ul{
+    ul {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      li{
-          font-size: 14px;
-          font-weight: 500;
+      li {
+        font-size: 14px;
+        font-weight: 500;
       }
-  }
-  
+    }
+
     .top {
       display: flex;
       gap: 20px;
@@ -28,9 +28,9 @@
         object-fit: cover;
       }
       .title {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
         span {
           width: fit-content;
           font-size: 14px;
@@ -45,49 +45,52 @@
         }
       }
     }
-    .job-detail{
+    .job-detail {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-around;
       align-items: center;
       padding: 30px;
       border: 1px solid #ddd;
-  
-      .left{
-          display: flex;
-          gap: 20px;
+
+      .left {
+        flex: 1;
+        display: flex;
+        gap: 20px;
       }
-      .middle{
-          display: flex;
-          gap: 20px;
-          border-left: 2px solid #ddd;
-          padding-left: 80px;
+      .middle {
+        flex: 1;
+        display: flex;
+        gap: 20px;
+        border-left: 2px solid #ddd;
+        padding-left: 80px;
       }
-      .right{
-          display: flex;
-          gap: 20px;
-          border-left: 2px solid #ddd;
-          padding-left: 80px;
+      .right {
+        flex: 1;
+        display: flex;
+        gap: 20px;
+        border-left: 2px solid #ddd;
+        padding-left: 80px;
       }
     }
-    .desc{
+    .desc {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      p{
-          font-size: 15px;
-          font-weight: 400;
-          color: #353535;
+      p {
+        font-size: 15px;
+        font-weight: 400;
+        color: #353535;
       }
     }
-    .bottom{
-      button{
-          padding: 7px 20px;
-          font-weight: 500;
-          font-size: 14px;
-          width: fit-content;
-          &:hover{
-              background: #054e47;
-          }
+    .bottom {
+      button {
+        padding: 7px 20px;
+        font-weight: 500;
+        font-size: 14px;
+        width: fit-content;
+        &:hover {
+          background: #054e47;
+        }
       }
     }
   }
